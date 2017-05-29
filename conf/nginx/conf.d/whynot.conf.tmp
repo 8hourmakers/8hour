@@ -5,6 +5,7 @@ server {
 
         access_log  /8hour/log/nginx/whynot.log;
 
+	location /whynot/admin/ { try_files $uri @whynot;}
         location /whynot/api/ { try_files $uri @whynot;}
         location @whynot {
            proxy_pass http://localhost:8002;
@@ -24,4 +25,7 @@ server {
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "Upgrade";
         }
+       location /whynot/static {
+           proxy_pass http://localhost:8002;
+       }
 }
