@@ -4,6 +4,7 @@ server {
         server_name localhost;
 
         access_log  /8hour/log/nginx/amoeba_chatting_access.log;
+        rewrite ^([^.]*[^/])$ $1/ permanent;
 
         location /amoeba_chatting/api/ { try_files $uri @amoeba_chatting;}
         location /amoeba_chatting/admin { try_files $uri @amoeba_chatting;}
@@ -30,6 +31,10 @@ server {
         }
         location /amoeba_chatting/statics {
            alias /8hour/app/amoeba-chatting/web/build/statics;
+        }
+
+        location /amoeba_chatting/static {
+           proxy_pass http://localhost:8001;
         }
         location /amoeba_chatting {
            root /8hour/app/amoeba-chatting/web/build;
